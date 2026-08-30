@@ -297,6 +297,40 @@
           <a href="https://www.facebook.com/profile.php?id=100054398535741" target="_blank" rel="noopener" class="btn">Facebook</a>
         </div>
       </div>
+
+      <!-- お問い合わせフォーム -->
+      <div class="cf-card rv">
+        <form class="cf-form" id="contact-form">
+          <div class="cf-group">
+            <label class="cf-label">お名前<span class="req">必須</span></label>
+            <input class="cf-input" type="text" id="cf-name" required>
+          </div>
+          <div class="cf-group">
+            <label class="cf-label">ご連絡先（電話番号またはメールアドレス）<span class="req">必須</span></label>
+            <input class="cf-input" type="text" id="cf-contact" required placeholder="例) 090-1234-5678 / example@mail.com">
+          </div>
+          <div class="cf-group">
+            <label class="cf-label">ご用件<span class="req">必須</span></label>
+            <select class="cf-select" id="cf-type" required>
+              <option value="" disabled selected>選択してください</option>
+              <option>スクール体験申込</option>
+              <option>スクール入会について</option>
+              <option>レンタルコートの予約・空き確認</option>
+              <option>個サル・イベントについて</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="cf-group">
+            <label class="cf-label">内容<span class="req">必須</span></label>
+            <textarea class="cf-textarea" id="cf-message" required placeholder="例) 小学2年生の体験を希望します。リーガコースの空きはありますか？"></textarea>
+          </div>
+          <button type="submit" class="cf-submit" id="cf-submit">送信する →</button>
+          <p class="cf-note">※ 内容を確認のうえ、ご連絡先へ折り返しご連絡いたします。お急ぎの場合はお電話（055-284-7717）がおすすめです。</p>
+        </form>
+        <div class="cf-done" id="cf-done" style="display:none;">
+          ✅ 送信しました！<br>内容を確認のうえ、折り返しご連絡いたします。
+        </div>
+      </div>
     </div>
   </section>
 
@@ -332,6 +366,35 @@
     // スクロールリビール
     var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); }, { threshold: 0.1 });
     document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+    // お問い合わせフォーム送信（Firebase /contact/wing に新規作成のみ）
+    document.getElementById('contact-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = document.getElementById('cf-submit');
+      btn.disabled = true; btn.textContent = '送信中...';
+      var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
+      var d = new Date();
+      var body = {
+        name: document.getElementById('cf-name').value.trim(),
+        contact: document.getElementById('cf-contact').value.trim(),
+        type: document.getElementById('cf-type').value,
+        message: document.getElementById('cf-message').value.trim(),
+        date: d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()),
+        status: '未対応'
+      };
+      fetch('https://hp-1-d7bce-default-rtdb.asia-southeast1.firebasedatabase.app/contact/wing.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      }).then(function(res){
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        document.getElementById('contact-form').style.display = 'none';
+        document.getElementById('cf-done').style.display = 'block';
+      }).catch(function(){
+        btn.disabled = false; btn.textContent = '送信する →';
+        alert('送信に失敗しました。お手数ですがお電話（055-284-7717）にてご連絡ください。');
+      });
+    });
   </script>
 </body>
 </html>
