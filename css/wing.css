@@ -289,7 +289,9 @@ button { font-family: inherit; }
 .sp-item {
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
   padding: 18px; display: flex; align-items: center; justify-content: center; min-height: 92px;
+  transition: transform .25s, box-shadow .25s;
 }
+a.sp-item:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(28,28,26,0.12); }
 .sp-item img { max-height: 56px; width: auto; max-width: 100%; object-fit: contain; }
 @media (min-width: 768px) { .sp-grid { grid-template-columns: repeat(4, 1fr); } }
 
