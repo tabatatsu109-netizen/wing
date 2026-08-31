@@ -367,27 +367,35 @@
     var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); }, { threshold: 0.1 });
     document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
 
-    // お問い合わせフォーム送信（Firebase /contact/wing に新規作成のみ）
+    // お問い合わせフォーム送信
+    //  ① Formspree → クラブのメールに通知
+    //  ② Firebase /contact/wing → 受信箱ページ(inquiries.html)にも記録
     document.getElementById('contact-form').addEventListener('submit', function(e){
       e.preventDefault();
       var btn = document.getElementById('cf-submit');
       btn.disabled = true; btn.textContent = '送信中...';
       var pad = function(n){ return n < 10 ? '0' + n : '' + n; };
       var d = new Date();
-      var body = {
-        name: document.getElementById('cf-name').value.trim(),
-        contact: document.getElementById('cf-contact').value.trim(),
-        type: document.getElementById('cf-type').value,
-        message: document.getElementById('cf-message').value.trim(),
-        date: d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()),
-        status: '未対応'
-      };
-      fetch('https://hp-1-d7bce-default-rtdb.asia-southeast1.firebasedatabase.app/contact/wing.json', {
+      var name = document.getElementById('cf-name').value.trim();
+      var contact = document.getElementById('cf-contact').value.trim();
+      var type = document.getElementById('cf-type').value;
+      var message = document.getElementById('cf-message').value.trim();
+      var dateStr = d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+
+      var mailBody = { '_subject': '【WING HP】' + type + '：' + name + '様より', 'お名前': name, 'ご連絡先': contact, 'ご用件': type, '内容': message };
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) mailBody['_replyto'] = contact;
+
+      fetch('https://formspree.io/f/mwlkvvww', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(mailBody)
       }).then(function(res){
         if(!res.ok) throw new Error('HTTP ' + res.status);
+        fetch('https://hp-1-d7bce-default-rtdb.asia-southeast1.firebasedatabase.app/contact/wing.json', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, contact: contact, type: type, message: message, date: dateStr, status: '未対応' })
+        }).catch(function(){});
         document.getElementById('contact-form').style.display = 'none';
         document.getElementById('cf-done').style.display = 'block';
       }).catch(function(){
