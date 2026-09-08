@@ -416,3 +416,14 @@ a.sp-item:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(28,2
 .rv { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
 .rv.on { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+
+/* ── セクション内の写真（v1.1） ── */
+.sec-photo {
+  margin: 28px 0 0; border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 18px 44px rgba(28,28,26,0.14);
+}
+.sec-photo img { width: 100%; height: clamp(200px, 42vw, 400px); object-fit: cover; display: block; }
+.sec-photos { display: grid; gap: 14px; margin-top: 28px; }
+.sec-photos figure { margin: 0; border-radius: var(--radius); overflow: hidden; box-shadow: 0 14px 34px rgba(28,28,26,0.12); }
+.sec-photos img { width: 100%; height: clamp(180px, 34vw, 300px); object-fit: cover; display: block; }
+@media (min-width: 768px) { .sec-photos { grid-template-columns: repeat(2, 1fr); } }
