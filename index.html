@@ -12,10 +12,10 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/wing.css?v=20260909b">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Yuji+Syuku&family=Kaushan+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/wing.css?v=20260909f">
 </head>
-<body>
+<body class="is-top">
 
   <!-- ヘッダー -->
   <!-- 上部バー: 姉妹クラブ FC ALASERIO への導線 -->
@@ -36,7 +36,7 @@
         <img src="assets/logo.png" alt="WING FUTSAL CLUB ロゴ">
       </a>
       <nav class="hd-nav">
-        <a href="index.html"><span class="n-en">Top</span><span class="n-ja">トップ</span></a>
+        <a href="index.html" class="on"><span class="n-en">Top</span><span class="n-ja">トップ</span></a>
         <a href="facility.html"><span class="n-en">Facility</span><span class="n-ja">施設紹介</span></a>
         <a href="school.html"><span class="n-en">School</span><span class="n-ja">スクール案内</span></a>
         <a href="rental.html"><span class="n-en">Rental</span><span class="n-ja">レンタルコート</span></a>
@@ -82,15 +82,19 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-kicker">Minami-Alps, Yamanashi</div>
-      <h1 class="hero-title">Wing<br>Futsal <span class="grn">Club</span></h1>
+      <h1 class="hero-title">Wing<br>Futsal<br><span class="grn">Club</span></h1>
       <p class="hero-copy">個人スキル向上（ドリブル）に特化した<br>フットサルスクール＆屋内コート。</p>
       <p class="hero-sub">一人ひとりが主役になれるクラブです。できる喜び、感じませんか？</p>
       <div class="hero-ctas">
-        <a href="school.html" class="btn btn-grn">スクールを見る <span class="ar">→</span></a>
-        <a href="rental.html" class="btn btn-line">レンタルコート <span class="ar">→</span></a>
+        <a href="school.html" class="btn btn-grn">スクール案内を見る <span class="ar">→</span></a>
+        <a href="rental.html" class="btn btn-line">レンタルコートを予約する <span class="ar">→</span></a>
       </div>
-      <div class="hero-photo rv"><img src="assets/hero.png" alt="WING FUTSAL CLUB のコーチとスクール生"></div>
     </div>
+    <div class="hero-media" role="img" aria-label="WING FUTSAL CLUB の屋内コートでプレーするスクール生"></div>
+    <p class="hero-brush" aria-hidden="true">フットサルで<br>もっと自由に、<br>もっと楽しく。</p>
+    <p class="hero-vert" aria-hidden="true">フットサルが、日常を変えていく。</p>
+    <p class="hero-script" aria-hidden="true">Play<br>Grow<br>Together.</p>
+    <div class="hero-mark" aria-hidden="true"><b>WING FUTSAL CLUB</b><span>MINAMI-ALPS, YAMANASHI</span></div>
   </section>
 
   <!-- ニュース行 -->
@@ -385,6 +389,15 @@
     document.getElementById('hamburger-btn').addEventListener('click', function(){ mobileNav.classList.add('open'); });
     document.getElementById('mobile-nav-close').addEventListener('click', function(){ mobileNav.classList.remove('open'); });
     mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileNav.classList.remove('open'); }); });
+    // トップのヘッダー: 少しスクロールしたら下地を出す（ヒーロー写真に重ねているため）
+    (function(){
+      var hd = document.querySelector('.hd');
+      if (!hd || !document.body.classList.contains('is-top')) return;
+      var sync = function(){ hd.classList.toggle('scrolled', window.scrollY > 40); };
+      sync();
+      window.addEventListener('scroll', sync, { passive: true });
+    })();
+
     // スクロールリビール
     var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); }, { threshold: 0.1 });
     document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
