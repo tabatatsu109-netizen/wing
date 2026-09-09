@@ -458,3 +458,26 @@ a.sp-item:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(28,2
 }
 .m-nav a.m-link--ala img { height: 32px; width: auto; }
 .m-nav a.m-link--ala .n-en { color: #f77f00; }
+
+/* ── ヘッダーナビ内の FC ALASERIO 導線（v1.3） ── */
+/* ヘッダーが詰まったときに文字が2行に折り返すのを防ぐ */
+.hd-nav .n-en, .hd-nav .n-ja, .hd-cta, .hd-tel .num { white-space: nowrap; }
+
+/* 768〜1199px はヘッダーの横幅が足りないため出さない（上部バーの導線で代替） */
+@media (min-width: 768px) {
+  .hd-nav > a.nav-ala { display: none; }
+}
+@media (min-width: 1200px) {
+  .hd-nav > a.nav-ala {
+    display: flex; position: relative; flex-direction: row; align-items: center; gap: 8px;
+    margin-left: 17px; padding-left: 12px; padding-right: 12px;
+  }
+  .hd-nav > a.nav-ala::before {
+    content: ''; position: absolute; left: -9px; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 28px; background: var(--line);
+  }
+  .hd-nav > a.nav-ala img { height: 26px; width: auto; display: block; }
+  .nav-ala-t { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
+  .hd-nav > a.nav-ala .n-en { color: #f77f00; }
+  .hd-nav > a.nav-ala:hover { background: rgba(247,127,0,0.10); }
+}
