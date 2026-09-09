@@ -490,7 +490,7 @@ a.sp-item:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(28,2
   position: relative; margin: 32px -20px 0; height: 66vw; max-height: 400px;
   background: url('../assets/hero-court.jpg') center 40% / cover no-repeat;
 }
-.hero-brush, .hero-vert, .hero-script, .hero-mark { display: none; }
+.hero-script, .hero-mark { display: none; }
 
 @media (min-width: 1024px) {
   .hero { padding: 0; min-height: min(86vh, 760px); display: flex; align-items: center; }
@@ -519,21 +519,8 @@ a.sp-item:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(28,2
       radial-gradient(70% 45% at 100% 0%, rgba(18,28,22,0.42) 0%, rgba(0,0,0,0) 62%);
   }
 
-  .hero-brush, .hero-vert, .hero-script, .hero-mark { display: block; position: absolute; z-index: 3; }
+  .hero-script, .hero-mark { display: block; position: absolute; z-index: 3; }
 
-  /* 筆文字のキャッチ（写真の溶け込み部分に重ねる） */
-  .hero-brush {
-    left: 43%; top: 47%; transform: rotate(-4deg);
-    font-family: 'Yuji Syuku', 'Noto Sans JP', serif;
-    font-size: clamp(26px, 2.5vw, 38px); line-height: 1.6; color: var(--ink);
-    text-shadow: 0 2px 12px rgba(239,238,233,0.85), 0 0 26px rgba(239,238,233,0.7);
-  }
-  /* 右端の縦書き */
-  .hero-vert {
-    right: 26px; top: 10%; writing-mode: vertical-rl; text-orientation: upright;
-    font-size: 13px; letter-spacing: 5px; font-weight: 500; color: #fff;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  }
   /* 手書き風スクリプト */
   .hero-script {
     right: 44px; top: 44%; text-align: right;
@@ -566,11 +553,8 @@ a.sp-item:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(28,2
   /* 右上の縦書きが読めるよう、その周りだけ更に落とす */
   .hero-media::after {
     background:
-      radial-gradient(115% 85% at 100% 100%, rgba(18,28,22,0.60) 0%, rgba(18,28,22,0.22) 40%, rgba(0,0,0,0) 68%),
-      linear-gradient(to left, rgba(18,28,22,0.55) 0%, rgba(18,28,22,0.18) 12%, rgba(0,0,0,0) 26%);
+      radial-gradient(112% 80% at 100% 100%, rgba(18,28,22,0.55) 0%, rgba(18,28,22,0.18) 42%, rgba(0,0,0,0) 70%);
   }
-  .hero-brush { font-size: clamp(28px, 2.8vw, 42px); }
-  .hero-vert { right: 22px; letter-spacing: 6px; font-weight: 700; }
 }
 
 /* ── ヘッダー：電話＋CTAを白いカードにまとめる（モックの見た目） ── */
