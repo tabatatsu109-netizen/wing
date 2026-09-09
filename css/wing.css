@@ -427,3 +427,34 @@ a.sp-item:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(28,2
 .sec-photos figure { margin: 0; border-radius: var(--radius); overflow: hidden; box-shadow: 0 14px 34px rgba(28,28,26,0.12); }
 .sec-photos img { width: 100%; height: clamp(180px, 34vw, 300px); object-fit: cover; display: block; }
 @media (min-width: 768px) { .sec-photos { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============================================================
+   上部バー：姉妹クラブ FC ALASERIO への導線（v1.2）
+   ============================================================ */
+.ut { background: var(--ink); color: #cfcec7; font-size: 12px; }
+.ut-inner {
+  max-width: 1240px; margin: 0 auto; padding: 0 16px 0 20px; min-height: 38px;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+}
+.ut-org { font-size: 11px; letter-spacing: 1.5px; color: #86857c; white-space: nowrap; }
+.ut-ala { display: inline-flex; align-items: center; gap: 9px; color: #cfcec7; padding: 6px 0; }
+.ut-ala img { height: 22px; width: auto; display: block; }
+.ut-ala b { color: #ff9d33; font-weight: 700; letter-spacing: 0.4px; }
+.ut-ar { color: #ff9d33; transition: transform .2s; }
+.ut-ala:hover { color: #fff; }
+.ut-ala:hover .ut-ar { transform: translateX(3px); }
+.ut-short { display: none; }
+@media (max-width: 640px) {
+  .ut-org { display: none; }
+  .ut-inner { justify-content: flex-end; padding: 0 14px; }
+  .ut-long { display: none; }
+  .ut-short { display: inline; }
+}
+
+/* モバイルメニュー内の FC ALASERIO 導線 */
+.m-nav a.m-link--ala {
+  align-items: center; gap: 11px; margin-top: 16px; padding-top: 20px;
+  border-top: 1px solid var(--line); border-bottom: none;
+}
+.m-nav a.m-link--ala img { height: 32px; width: auto; }
+.m-nav a.m-link--ala .n-en { color: #f77f00; }
