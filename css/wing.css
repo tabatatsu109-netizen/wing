@@ -625,3 +625,12 @@ a.sp-item:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(28,2
   font-size: clamp(21px, 3.4vw, 31px); font-weight: 700; line-height: 1.8; letter-spacing: 1px;
 }
 .pull .grn { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ── スマホ: ヒーロー写真を見出しより前に出す（下に回ると1画面目に入らないため） ── */
+@media (max-width: 767px) {
+  .hero { display: flex; flex-direction: column; padding-top: 0; }
+  .hero-media {
+    order: -1; margin: 0 0 30px; height: 68vw; max-height: 360px;
+    background-position: center 42%;
+  }
+}
